@@ -1,0 +1,18 @@
+Usecase: Find what and how input data has been used to output a specific yield prediction.
+
+SPARQL query:
+PREFIX senaps:<http://www.csiro.au/ontologies/senaps#>
+PREFIX provone:<http://purl.dataone.org/provone#> 
+PREFIX prov:<http://www.w3.org/ns/prov#>
+
+SELECT DISTINCT ?model (?portId AS ?variableName) ?data
+WHERE {
+    <output> (prov:wasGeneratedBy/prov:used)* ?data. 
+    OPTIONAL {?data prov:wasGeneratedBy ?exec.}
+    OPTIONAL {?usage provone:hadEntity ?data. 
+        ?usage provone:hadInPort ?port. 
+        ?port senaps:portId ?portId.
+        ?opNode provone:hasInPort ?port.
+        ?opNode senaps:host ?model. }
+FILTER (!bound(?exec)) } 
+\end{lstlisting}

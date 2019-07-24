@@ -1,0 +1,3 @@
+Usecase: Is the behaviour in a second workflow execution is conformant with the workflow's behaviour in the first.
+
+Description: This query can assist to perform impact (due to intentional changes in workflows) and/or cause (due to unintentional changes in workflows) analysis in case of any change in the behaviour of workflow on two separate days. To date, ProvAnalyser can partially answer the query by providing the implicit workflow structure of two workflow executions using workflow-specification query.

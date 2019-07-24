@@ -1,0 +1,20 @@
+Usecase: Identify all workflow executions that used (a specific version of) the APSIM model and group them by their organisations.
+
+Description: The result of this query helps to communicate all the organisations which are likely to be affected by a change in APSIM model. 
+
+SPARQL query:
+
+PREFIX senaps:<http://www.csiro.au/ontologies/senaps#>
+PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX provone:<http://purl.dataone.org/provone#> 
+PREFIX prov:<http://www.w3.org/ns/prov#>
+        
+SELECT DISTINCT ?orgs ?workflowExec 
+WHERE {
+    ?opNodes senaps:host senaps:graincast.apsim.
+    ?assoc prov:hadPlan ?opNodes;
+    	prov:agent ?orgs. 
+    ?orgs rdf:type senaps:Organisation.
+    ?opExecution prov:qualifiedAssociation ?assoc;
+	    senaps:partOf ?workflowExec.
+    } Group By ?orgs ?workflowExec 
